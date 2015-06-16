@@ -1,0 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".Drum"
+    android:label="808 Slap"
+    android:name="808 Slap"
+    style="@style/slap">
+
+
+    <Button
+        style="@style/ButtonSlap"
+        android:id="@+id/bass"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <Button
+        style="@style/ButtonSlap"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:id="@+id/snare"
+        android:layout_below="@+id/bass"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp"
+        />
+
+    <Button
+        style="@style/ButtonSlap"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:id="@+id/kick"
+        android:layout_below="@+id/bass"
+        android:layout_alignRight="@+id/bass"
+        android:layout_alignEnd="@+id/bass"
+        android:layout_marginTop="15dp"/>
+
+</RelativeLayout>
