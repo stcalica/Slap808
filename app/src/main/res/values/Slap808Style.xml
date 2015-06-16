@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="slap">
+        <item name="android:background">#4D2D73</item>
+    </style>
+    <style name="ButtonSlap">
+        <item name="android:background">#338A2E</item>
+    </style>
+
+</resources>
