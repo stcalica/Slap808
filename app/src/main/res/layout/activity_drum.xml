@@ -11,6 +11,7 @@
 
     <Button
         style="@style/ButtonSlap"
+        android:background="@drawable/drum_hit"
         android:id="@+id/bass"
         android:layout_width="match_parent"
         android:layout_height="100dp"
@@ -22,6 +23,7 @@
 
     <Button
         style="@style/ButtonSlap"
+        android:background="@drawable/drum_hit"
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:id="@+id/snare"
@@ -33,6 +35,7 @@
 
     <Button
         style="@style/ButtonSlap"
+        android:background="@drawable/drum_hit"
         android:layout_width="150dp"
         android:layout_height="100dp"
         android:id="@+id/kick"
@@ -40,5 +43,36 @@
         android:layout_alignRight="@+id/bass"
         android:layout_alignEnd="@+id/bass"
         android:layout_marginTop="15dp"/>
+    <Button
+        style="@style/ButtonSlap"
+        android:background="@drawable/drum_hit"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:id="@+id/shake"
+        android:layout_below="@+id/snare"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp"
+        />
 
+    <Button
+        style="@style/ButtonSlap"
+        android:background="@drawable/drum_hit"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:id="@+id/clap"
+        android:layout_below="@+id/kick"
+        android:layout_alignRight="@+id/kick"
+        android:layout_alignEnd="@+id/kick"
+        android:layout_marginTop="15dp"/>
+    <Button
+        style="@style/ButtonSlap"
+        android:background="@drawable/drum_hit"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:id="@+id/hey"
+        android:layout_below="@+id/clap"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="15dp"/>
 </RelativeLayout>

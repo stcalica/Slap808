@@ -1,5 +1,6 @@
 package com.example.kyle.slap08;
 
+import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
 import android.media.SoundPool;
@@ -12,57 +13,79 @@ import android.widget.Button;
 import android.widget.Toast;
 
 public class Drum extends AppCompatActivity {
+    boolean loaded =false;
     Button bass;
     Button snare;
     Button kick;
+    Button shake;
+    Button clap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        final SoundPool sp = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
+        final int bassID = sp.load(this, R.raw.bass, 1);
+        final int snareID = sp.load(this, R.raw.snare, 1);
+        final int kickID = sp.load(this, R.raw.kick, 1);
+        final int shakeID = sp.load(this, R.raw.shake, 1);
+        final int clapID = sp.load(this, R.raw.clap, 1);
+        final int heyID = sp.load(this, R.raw.hey, 1);
+
+        AudioManager am = (AudioManager) getSystemService(AUDIO_SERVICE);
+        Float actVolume = (float) am.getStreamVolume(AudioManager.STREAM_MUSIC);
+        Float maxVolume = (float) am.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        final Float volume = actVolume/maxVolume;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_drum);
-        bass = (Button) findViewById(R.id.bass);
-        snare = (Button) findViewById(R.id.snare);
-        kick = (Button) findViewById(R.id.kick);
-        final MediaPlayer mp = new MediaPlayer();
-        mp.setAudioStreamType(AudioManager.STREAM_MUSIC);
-        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+        sp.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
-            public void onCompletion(MediaPlayer mp) {
-                mp.reset();
-                mp.release();
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                loaded = true;
 
             }
         });
+        this.setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
+
+        bass = (Button) findViewById(R.id.bass);
+        snare = (Button) findViewById(R.id.snare);
+        kick = (Button) findViewById(R.id.kick);
+        shake = (Button) findViewById(R.id.shake);
+        clap = (Button) findViewById(R.id.clap);
+        Button hey = (Button) findViewById(R.id.hey);
         bass.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                mp.create(getApplicationContext(), R.raw.bass).start();
-                mp.release();
-
-                //sounds.play(bassID, 100, 100, 1, 0, 1f);
-              //  bassplay.reset();
-
+                sp.play(bassID, volume, volume, 1, 1, 1f);
             }
         });
         snare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-              //  SoundUtility.PlaySound(mp, R.raw.snares, getApplicationContext());
-                mp.create(getApplicationContext(), R.raw.snare).start();
-
-
-                //snareplay.start(); // no need to call prepare(); create() does that for you
-                //snareplay.reset();
+                sp.play(snareID, volume, volume, 1, 1, 1f);
             }
         });
         kick.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mp.create(getApplicationContext(), R.raw.kick).start();
-                //kickplay.start(); // no need to call prepare(); create() does that for you
-                //kickplay.reset();
+                sp.play(kickID, volume, volume, 1, 1, 1f);
+            }
+        });
+        shake.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sp.play(shakeID, volume, volume, 1, 1, 1f);
+            }
+        });
+        clap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sp.play(clapID, volume, volume, 1, 1, 1f);
 
+            }
+        });
+        hey.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sp.play(heyID, volume, volume, 1, 1, 1f);
             }
         });
     } //END OF ONCREATE
