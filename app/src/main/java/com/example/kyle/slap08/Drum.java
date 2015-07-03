@@ -25,8 +25,9 @@ public class Drum extends AppCompatActivity {
     Button clap;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-       rec = new MediaRecorder();
-        rec.setAudioSource(MediaRecorder.AudioSource.MIC);
+        rec = new MediaRecorder();
+        rec.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
+        //rec.setAudioSource(MediaRecorder.AudioSource.MIC);
         rec.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
         rec.setOutputFile("track1"); //change to different output files
         rec.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
