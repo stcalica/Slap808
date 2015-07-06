@@ -1,8 +1,10 @@
 package com.example.kyle.slap08;
 
 import android.media.AudioManager;
+import android.media.MediaPlayer;
 import android.media.MediaRecorder;
 import android.media.SoundPool;
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +18,10 @@ import java.io.IOException;
 
 public class Drum extends AppCompatActivity {
     MediaRecorder rec;
+
+    //rec.setOutputFile(mFileName); //change to different output files
+    String mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
+
     boolean recording = false;
     boolean loaded =false;
     Button bass;
@@ -27,10 +33,10 @@ public class Drum extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         rec = new MediaRecorder();
         rec.setAudioSource(MediaRecorder.AudioSource.DEFAULT);
-        //rec.setAudioSource(MediaRecorder.AudioSource.MIC);
-        rec.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-        rec.setOutputFile("track1"); //change to different output files
+        rec.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
         rec.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
+        rec.setOutputFile(mFileName + "/track1");
+        Log.d("FilePath", mFileName + "/track1");
         final SoundPool sp = new SoundPool(10, AudioManager.STREAM_MUSIC, 0);
         final int bassID = sp.load(this, R.raw.deep, 1);
         final int snareID = sp.load(this, R.raw.snare, 1);
@@ -108,19 +114,27 @@ public class Drum extends AppCompatActivity {
     }
 
     protected  void recordToggle(){
-        if(recording == true){
+        if(recording){
             recording = false;
-            rec.stop();
-            Toast t = Toast.makeText(getApplicationContext(), "Recoding Off", Toast.LENGTH_SHORT);
-            t.show();
+            try {
+                rec.stop();
+            } catch (RuntimeException stopException) {
+                //handle cleanup here
+                Toast t = Toast.makeText(getApplicationContext(), "Recoding Off", Toast.LENGTH_SHORT);
+                t.show();
+            }
+            //rec.reset();
+            //rec.release();
+
         } else {
             recording = true;
-            try{
+            try {
                 rec.prepare();
-            } catch (IOException e){
-                Log.e("Recorder", "prepare() failed");
+                rec.start();
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            rec.start();
             Toast t = Toast.makeText(getApplicationContext(), "Recoding On", Toast.LENGTH_SHORT);
             t.show();
         }
@@ -128,8 +142,12 @@ public class Drum extends AppCompatActivity {
 
     }
 
-    protected  void playBack(){
+    protected  void playBack() throws IOException {
 
+        MediaPlayer mp = new MediaPlayer();
+        mp.setDataSource(mFileName + "/track1");
+        mp.prepare();
+        mp.start();
         Toast t = Toast.makeText(getApplicationContext(), "Playback", Toast.LENGTH_SHORT);
         t.show();
 
@@ -147,7 +165,12 @@ public class Drum extends AppCompatActivity {
                 recordToggle();
                 return true;
             case R.id.action_play:
-                playBack();
+                try {
+                    playBack();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.d("Sounds", "Exception thrown");
+                }
                 return true;
 
         }
